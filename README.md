@@ -20,9 +20,9 @@ A cross-platform, Google Docs-style collaborative document editor, built from sc
 
 > **Preview:**
 
-[<video src="https://raw.githubusercontent.com/isamm-ali/SulfurDocs-RealTime-Document-Editor/main/images/clipsulfurdocs.mp4" controls width="800"></video>](https://github.com/user-attachments/assets/22b04eb9-9b0e-4e04-814d-14cee1c63d68)
+[<video src="https://raw.githubusercontent.com/sulfurcodes/SulfurDocs-RealTime-Document-Editor/main/images/clipsulfurdocs.mp4" controls width="800"></video>](https://github.com/user-attachments/assets/22b04eb9-9b0e-4e04-814d-14cee1c63d68)
 
-![Document Editor](https://raw.githubusercontent.com/isamm-ali/Realtime-Document-Editor/main/images/image1.png)
+![Document Editor](https://raw.githubusercontent.com/sulfurcodes/Realtime-Document-Editor/main/images/image1.png)
 
 The project started as a way to learn what actually sits behind a collaborative editor, past the text-editing UI. It now has full authentication, per-user document storage, a rich text editor, live multi-client sync, and autosave, and it's deployed and running.
 
