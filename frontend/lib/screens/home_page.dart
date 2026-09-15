@@ -149,6 +149,13 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: isPhone ? 5 : 6),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 0.18,
+                      )
+                    ),
                     child: ListTile(
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: isPhone ? 14 : 16,

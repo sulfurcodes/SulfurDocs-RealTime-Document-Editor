@@ -6,7 +6,6 @@ import 'package:frontend/providers/document_repository_provider.dart';
 import 'package:frontend/models/document_model.dart';
 import 'package:frontend/repositories/socket_repository.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:frontend/providers/user_provider.dart';
 
 import 'dart:async';
 
@@ -178,9 +177,9 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
             Expanded(
               child: TextField(
                 controller: nameController,
-                onSubmitted: (value) {
+                onSubmitted: (value) async {
                   if (value.trim().isNotEmpty) {
-                    nameDocument(value.trim());
+                    await nameDocument(value.trim());
                   }
                 },
                 decoration: InputDecoration(

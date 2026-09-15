@@ -8,7 +8,6 @@ import 'package:routemaster/routemaster.dart';
 
 class ProfilePic extends ConsumerStatefulWidget {
   const ProfilePic({super.key});
-
   @override
   ConsumerState<ProfilePic> createState() => _ProfilePicState();
 }
@@ -20,14 +19,11 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
   @override
   void initState() {
     super.initState();
-
     final signup = ref.read(signupProvider);
-
     if (signup.pfp.isNotEmpty) {
       final savedIndex = avatars.indexWhere(
         (avatar) => avatar.id == signup.pfp,
       );
-
       if (savedIndex >= 0) {
         selectedIndex = savedIndex;
       }
@@ -38,7 +34,6 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
     if (isLoading) return;
 
     final signup = ref.read(signupProvider);
-
     final username = signup.username.trim();
     final email = signup.email.trim().toLowerCase();
     final password = signup.password;
@@ -55,7 +50,6 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
       );
       return;
     }
-
     if (pfp.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -65,32 +59,24 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
       );
       return;
     }
-
     final signupData = SignupState(
       username: username,
       email: email,
       password: password,
       pfp: pfp,
     );
-
     ref.read(signupProvider.notifier).setPfp(pfp);
-
     setState(() {
       isLoading = true;
     });
-
     try {
       final authRepo = ref.read(authRepositoryProvider);
-
       final signupResult = await authRepo.signup(signupData);
-
       if (!mounted) return;
-
       if (signupResult['success'] != true) {
         setState(() {
           isLoading = false;
         });
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -99,22 +85,17 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
             backgroundColor: Colors.red,
           ),
         );
-
         return;
       }
-
       final loginResult = await authRepo.signin(
         email: signupData.email,
         password: signupData.password,
       );
-
       if (!mounted) return;
-
       if (loginResult['success'] != true) {
         setState(() {
           isLoading = false;
         });
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -124,17 +105,13 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
             backgroundColor: Colors.red,
           ),
         );
-
         return;
       }
-
       final rawUser = loginResult['user'];
-
       if (rawUser is! Map) {
         setState(() {
           isLoading = false;
         });
-
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
@@ -143,30 +120,21 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
             backgroundColor: Colors.red,
           ),
         );
-
         return;
       }
-
       final user = Map<String, dynamic>.from(rawUser);
-
       ref.read(userProvider.notifier).setUser(user);
-
       ref.read(signupProvider.notifier).reset();
-
       if (!mounted) return;
-
       setState(() {
         isLoading = false;
       });
-
       Routemaster.of(context).replace('/');
     } catch (e) {
       if (!mounted) return;
-
       setState(() {
         isLoading = false;
       });
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Something went wrong: $e'),
@@ -178,17 +146,23 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isPhone = screenWidth < 600;
+    final titleFontSize = isPhone ? 20.0 : 40.0;
+    final buttonFontSize = isPhone ? 18.0 : 25.0;
+    final mainAvatarSize = isPhone ? 140.0 : 200.0;
+    final gridAvatarSize = isPhone ? 70.0 : 45.0;
+
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.white,
-        title: const Text(
+        title: Text(
           'Avatar',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: titleFontSize,
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
@@ -204,8 +178,8 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
               const SizedBox(height: 10),
 
               Container(
-                width: 140,
-                height: 140,
+                width: mainAvatarSize,
+                height: mainAvatarSize,
                 decoration: const BoxDecoration(shape: BoxShape.circle),
                 clipBehavior: Clip.antiAlias,
                 child: Image.asset(
@@ -216,11 +190,11 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
 
               const SizedBox(height: 25),
 
-              const Text(
+              Text(
                 'Pick an Avatar',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 15,
+                  fontSize: buttonFontSize,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -238,7 +212,6 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
                 itemCount: avatars.length,
                 itemBuilder: (context, index) {
                   final isSelected = selectedIndex == index;
-
                   return GestureDetector(
                     onTap: isLoading
                         ? null
@@ -259,6 +232,8 @@ class _ProfilePicState extends ConsumerState<ProfilePic> {
                         child: Image.asset(
                           avatars[index].asset,
                           fit: BoxFit.cover,
+                          width: gridAvatarSize,
+                          height: gridAvatarSize,
                         ),
                       ),
                     ),
