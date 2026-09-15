@@ -241,7 +241,31 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
                 padding: EdgeInsets.symmetric(horizontal: isPhone ? 4 : 10),
                 child: QuillSimpleToolbar(
                   controller: quillController,
-                  config: const QuillSimpleToolbarConfig(),
+                  config: const QuillSimpleToolbarConfig(
+                    showFontFamily: true,
+                    showFontSize: true,
+                    showColorButton: true,
+                    showBackgroundColorButton: true,
+                    buttonOptions: QuillSimpleToolbarButtonOptions(
+                      fontFamily: QuillToolbarFontFamilyButtonOptions(
+                        items: <String, String>{
+                          'Ibarra Real Nova': 'ibarra-real-nova',
+                          'SquarePeg': 'square-peg',
+                          'Nunito': 'nunito',
+                          'Pacifico': 'pacifico',
+                          'Roboto Mono': 'roboto-mono',
+                        },
+                      ),
+                      fontSize: QuillToolbarFontSizeButtonOptions(
+                        items: {
+                          'Small': '12',
+                          'Large': '24',
+                          'Huge': '32',
+                          'Clear': '18',
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
